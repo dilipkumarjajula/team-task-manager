@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>Welcome, <b>{{ user.name }}</b> | Role: <b>{{ user.role }}</b></p>
+
+<div class="row g-3">
+    <div class="col-md-3"><div class="stat-card"><h4>{{ total_tasks }}</h4><p>Total Tasks</p></div></div>
+    <div class="col-md-3"><div class="stat-card"><h4>{{ pending }}</h4><p>Pending</p></div></div>
+    <div class="col-md-3"><div class="stat-card"><h4>{{ progress }}</h4><p>In Progress</p></div></div>
+    <div class="col-md-3"><div class="stat-card"><h4>{{ completed }}</h4><p>Completed</p></div></div>
+</div>
+
+<div class="mt-3 alert alert-danger">
+    Overdue Tasks: <b>{{ overdue }}</b>
+</div>
+
+{% if user.role == 'Admin' %}
+<div class="mt-4">
+    <a class="btn btn-primary" href="{{ url_for('create_project') }}">Create Project</a>
+    <a class="btn btn-success" href="{{ url_for('create_task') }}">Create Task</a>
+</div>
+{% endif %}
+
+<h4 class="mt-4">Recent Tasks</h4>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Task</th>
+        <th>Status</th>
+        <th>Due Date</th>
+    </tr>
+    {% for task in tasks[:5] %}
+    <tr>
+        <td>{{ task.title }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.due_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

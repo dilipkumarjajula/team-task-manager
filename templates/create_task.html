@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create Task</h2>
+<form method="POST" class="form-card">
+    <label>Task Title</label>
+    <input class="form-control mb-3" name="title" required>
+
+    <label>Description</label>
+    <textarea class="form-control mb-3" name="description"></textarea>
+
+    <label>Project</label>
+    <select class="form-control mb-3" name="project_id" required>
+        {% for project in projects %}
+        <option value="{{ project.id }}">{{ project.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Assign To</label>
+    <select class="form-control mb-3" name="assigned_to" required>
+        {% for member in users %}
+        <option value="{{ member.id }}">{{ member.name }} - {{ member.role }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Due Date</label>
+    <input class="form-control mb-3" type="date" name="due_date">
+
+    <button class="btn btn-success">Create Task</button>
+</form>
+{% endblock %}

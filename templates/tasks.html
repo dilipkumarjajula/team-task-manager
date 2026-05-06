@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between">
+    <h2>Tasks</h2>
+    {% if user.role == 'Admin' %}
+    <a class="btn btn-success" href="{{ url_for('create_task') }}">Create Task</a>
+    {% endif %}
+</div>
+
+<table class="table table-bordered table-striped mt-3">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Due Date</th>
+        <th>Update</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.due_date }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('update_task_status', task_id=task.id) }}" class="d-flex gap-2">
+                <select class="form-control" name="status">
+                    <option {% if task.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option {% if task.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option {% if task.status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+                <button class="btn btn-sm btn-primary">Save</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

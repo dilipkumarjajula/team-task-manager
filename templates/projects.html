@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between">
+    <h2>Projects</h2>
+    {% if user.role == 'Admin' %}
+    <a class="btn btn-primary" href="{{ url_for('create_project') }}">Create Project</a>
+    {% endif %}
+</div>
+
+<table class="table table-bordered table-striped mt-3">
+    <tr>
+        <th>Project Name</th>
+        <th>Description</th>
+        <th>Created At</th>
+    </tr>
+    {% for project in projects %}
+    <tr>
+        <td>{{ project.name }}</td>
+        <td>{{ project.description }}</td>
+        <td>{{ project.created_at.strftime('%Y-%m-%d') }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
